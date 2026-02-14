@@ -79,15 +79,15 @@ export function QuizWizard({ scenario, compact }: Props) {
   };
 
   return (
-    <div className={`rounded-3xl border border-[#e3d8c6] bg-[#fcfaf6] p-5 shadow-soft ${compact ? '' : 'lg:p-8'}`}>
-      <div className="mb-5 h-2 rounded-full bg-[#ece4d8]">
-        <motion.div className="h-full rounded-full bg-[#c6a46c]" animate={{ width: `${progress}%` }} />
+    <div className={`rounded-3xl border border-white/10 bg-slate-900/70 p-5 backdrop-blur-xl ${compact ? '' : 'lg:p-8'}`}>
+      <div className="mb-5 h-2 rounded-full bg-white/10">
+        <motion.div className="h-full rounded-full bg-neon" animate={{ width: `${progress}%` }} />
       </div>
 
       {!done && current && (
         <div className="space-y-4">
-          <p className="text-sm text-[#7b6f5e]">Шаг {step + 1} из 6</p>
-          <h3 className="text-xl font-medium">{toLabel[current[0]]}</h3>
+          <p className="text-sm text-slate-300">Шаг {step + 1} из 6</p>
+          <h3 className="text-xl font-semibold">{toLabel[current[0]]}</h3>
           <div className="grid gap-3 sm:grid-cols-2">
             {current[1].map((option) => {
               const active = answers[current[0]] === option;
@@ -96,7 +96,7 @@ export function QuizWizard({ scenario, compact }: Props) {
                   type="button"
                   key={option}
                   onClick={() => setAnswers((v) => ({ ...v, [current[0]]: option }))}
-                  className={`rounded-2xl border p-4 text-left transition ${active ? 'border-[#c6a46c] bg-[#f5efe3]' : 'border-[#e7ddcf] bg-white hover:bg-[#faf6f1]'}`}
+                  className={`rounded-2xl border p-4 text-left transition ${active ? 'border-neon bg-neon/20' : 'border-white/15 bg-white/5 hover:border-white/35'}`}
                 >
                   {option}
                 </button>
@@ -104,10 +104,10 @@ export function QuizWizard({ scenario, compact }: Props) {
             })}
           </div>
           <div className="flex gap-2">
-            <button type="button" onClick={() => setStep((s) => Math.max(0, s - 1))} disabled={step === 0} className="rounded-xl border border-[#ddd2c3] px-4 py-2 disabled:opacity-40">
+            <button type="button" onClick={() => setStep((s) => Math.max(0, s - 1))} disabled={step === 0} className="rounded-xl border border-white/20 px-4 py-2 disabled:opacity-40">
               <ChevronLeft className="inline" size={16} /> Назад
             </button>
-            <button type="button" onClick={() => setStep((s) => Math.min(5, s + 1))} disabled={!answers[current[0]]} className="rounded-xl bg-[#c6a46c] px-4 py-2 font-semibold text-[#2f2417] disabled:opacity-40">
+            <button type="button" onClick={() => setStep((s) => Math.min(5, s + 1))} disabled={!answers[current[0]]} className="rounded-xl bg-neon px-4 py-2 font-semibold text-slate-950 disabled:opacity-40">
               Далее <ChevronRight className="inline" size={16} />
             </button>
           </div>
@@ -116,23 +116,23 @@ export function QuizWizard({ scenario, compact }: Props) {
 
       {!done && step === 5 && (
         <form onSubmit={submitLead} className="space-y-3">
-          <p className="text-sm text-[#7b6f5e]">Шаг 6 из 6</p>
-          <h3 className="text-xl font-medium">Контакты</h3>
-          <input className="w-full rounded-xl border border-[#e6dccf] bg-white p-3" placeholder="Имя" value={answers.name} onChange={(e) => setAnswers((v) => ({ ...v, name: e.target.value }))} />
-          <input className="w-full rounded-xl border border-[#e6dccf] bg-white p-3" placeholder="Телефон*" value={answers.phone} onChange={(e) => setAnswers((v) => ({ ...v, phone: maskPhone(e.target.value) }))} required />
-          <input className="w-full rounded-xl border border-[#e6dccf] bg-white p-3" placeholder="Telegram (опционально)" value={answers.telegram} onChange={(e) => setAnswers((v) => ({ ...v, telegram: e.target.value }))} />
-          <label className="flex items-center gap-2 text-sm text-[#6a604f]">
+          <p className="text-sm text-slate-300">Шаг 6 из 6</p>
+          <h3 className="text-xl font-semibold">Контакты</h3>
+          <input className="w-full rounded-xl bg-white/5 p-3" placeholder="Имя" value={answers.name} onChange={(e) => setAnswers((v) => ({ ...v, name: e.target.value }))} />
+          <input className="w-full rounded-xl bg-white/5 p-3" placeholder="Телефон*" value={answers.phone} onChange={(e) => setAnswers((v) => ({ ...v, phone: maskPhone(e.target.value) }))} required />
+          <input className="w-full rounded-xl bg-white/5 p-3" placeholder="Telegram (опционально)" value={answers.telegram} onChange={(e) => setAnswers((v) => ({ ...v, telegram: e.target.value }))} />
+          <label className="flex items-center gap-2 text-sm text-slate-300">
             <input type="checkbox" checked={answers.consent} onChange={(e) => setAnswers((v) => ({ ...v, consent: e.target.checked }))} required />
             Даю согласие на обработку персональных данных
           </label>
           <div className="flex flex-wrap gap-2">
-            <button type="button" onClick={() => setStep(4)} className="rounded-xl border border-[#ddd2c3] px-4 py-2">
+            <button type="button" onClick={() => setStep(4)} className="rounded-xl border border-white/20 px-4 py-2">
               <ChevronLeft className="inline" size={16} /> Назад
             </button>
-            <a href={`${TELEGRAM_URL}?text=${telegramMessage}`} className="rounded-xl border border-[#d3bc96] px-4 py-2 text-[#86663a]" target="_blank" rel="noreferrer">
+            <a href={`${TELEGRAM_URL}?text=${telegramMessage}`} className="rounded-xl border border-neon/40 px-4 py-2 text-neon" target="_blank" rel="noreferrer">
               Отправить ответы в Telegram
             </a>
-            <button className="rounded-xl bg-[#c6a46c] px-4 py-2 font-semibold text-[#2f2417]" disabled={saving}>
+            <button className="rounded-xl bg-neon px-4 py-2 font-semibold text-slate-950" disabled={saving}>
               {saving ? 'Отправка...' : 'Оставить заявку'}
             </button>
           </div>
@@ -141,10 +141,10 @@ export function QuizWizard({ scenario, compact }: Props) {
 
       {done && (
         <div className="space-y-3">
-          <p className="text-sm text-[#947246]">Готово</p>
-          <h3 className="text-2xl font-medium">Спасибо! Заявка принята.</h3>
-          <p className="text-[#5e5344]">Свяжусь с вами и отправлю персональный подбор под ипотеку 2%.</p>
-          <p className="text-sm text-[#7d6f5e]">Либо сразу напишите: {PHONE}</p>
+          <p className="text-sm text-neon">Готово</p>
+          <h3 className="text-2xl font-semibold">Спасибо! Заявка принята.</h3>
+          <p className="text-slate-300">Свяжусь с вами и отправлю персональный подбор под ипотеку 2%.</p>
+          <p className="text-sm text-slate-400">Либо сразу напишите: {PHONE}</p>
         </div>
       )}
     </div>

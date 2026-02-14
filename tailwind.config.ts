@@ -2,27 +2,22 @@ import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: ['./app/**/*.{js,ts,jsx,tsx,mdx}', './components/**/*.{js,ts,jsx,tsx,mdx}'],
-  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        cream: '#FAF9F7',
-        milk: '#F4F1EC',
-        beige: '#EAE3D9',
-        graphite: '#2B2B2B',
-        ink: '#1F1F1F',
-        accent: '#C6A46C',
-        terracotta: '#C47A5A',
+        graphite: '#0B1020',
+        ink: '#111827',
+        neon: '#00E5BC',
       },
       boxShadow: {
-        soft: '0 12px 30px rgba(43,43,43,0.08)',
-        button: '0 8px 22px rgba(198,164,108,0.28)',
+        glow: '0 0 0 1px rgba(255,255,255,0.08), 0 12px 40px rgba(0, 229, 188, 0.18)',
       },
       backgroundImage: {
-        'section-warm': 'linear-gradient(180deg, #FAF9F7 0%, #F1ECE6 100%)',
-      },
+        'premium-gradient': 'radial-gradient(circle at 20% 20%, rgba(0,229,188,0.18), transparent 38%), radial-gradient(circle at 80% 5%, rgba(86,49,255,0.18), transparent 35%), linear-gradient(135deg, #050913 0%, #0c1730 55%, #0b1a22 100%)'
+      }
     },
   },
+  darkMode: 'class',
   plugins: [],
 };
 

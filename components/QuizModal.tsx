@@ -22,21 +22,25 @@ export function QuizModal({ open, onClose, scenario }: Props) {
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[70] flex items-end justify-center bg-[#2d261d]/35 p-4 backdrop-blur-sm lg:items-center"
+          className="fixed inset-0 z-[70] flex items-end justify-center bg-slate-900/55 p-4 backdrop-blur-md lg:items-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
         >
           <motion.div
-            initial={{ y: 28, opacity: 0, scale: 0.985 }}
+            initial={{ y: 40, opacity: 0, scale: 0.98 }}
             animate={{ y: 0, opacity: 1, scale: 1 }}
-            exit={{ y: 24, opacity: 0, scale: 0.985 }}
-            transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+            exit={{ y: 40, opacity: 0, scale: 0.98 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             onClick={(e) => e.stopPropagation()}
             className="relative w-full max-w-3xl"
           >
-            <button onClick={onClose} className="absolute -top-3 right-2 rounded-full border border-[#ddceb8] bg-[#fcfaf6] p-2 text-[#6a5637]" aria-label="Закрыть квиз">
+            <button
+              onClick={onClose}
+              className="absolute -top-3 right-2 rounded-full bg-slate-950/90 p-2 text-white"
+              aria-label="Закрыть квиз"
+            >
               <X size={18} />
             </button>
             <QuizWizard scenario={scenario} />
