@@ -3,30 +3,29 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
-export function AutoImageSlider({ images, alt, intervalMs = 3000 }) {
-  const safeImages = Array.isArray(images) && images.length ? images : ['/images/placeholders/complex.svg'];
+export function AutoImageSlider({ images, alt }) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const touchStart = useRef(null);
 
   useEffect(() => {
-    if (safeImages.length <= 1 || paused) return undefined;
+    if (images.length <= 1 || paused) return undefined;
     const id = setInterval(() => {
-      setIndex((v) => (v + 1) % safeImages.length);
-    }, intervalMs);
+      setIndex((v) => (v + 1) % images.length);
+    }, 3000);
     return () => clearInterval(id);
-  }, [safeImages.length, paused, intervalMs]);
+  }, [images.length, paused]);
 
   const onTouchStart = (e) => {
     touchStart.current = e.touches[0].clientX;
   };
 
   const onTouchEnd = (e) => {
-    if (touchStart.current === null || safeImages.length <= 1) return;
+    if (touchStart.current === null) return;
     const diff = touchStart.current - e.changedTouches[0].clientX;
     if (Math.abs(diff) > 35) {
-      if (diff > 0) setIndex((v) => (v + 1) % safeImages.length);
-      else setIndex((v) => (v - 1 + safeImages.length) % safeImages.length);
+      if (diff > 0) setIndex((v) => (v + 1) % images.length);
+      else setIndex((v) => (v - 1 + images.length) % images.length);
     }
     touchStart.current = null;
   };
@@ -39,9 +38,9 @@ export function AutoImageSlider({ images, alt, intervalMs = 3000 }) {
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
-      {safeImages.map((src, i) => (
+      {images.map((src, i) => (
         <Image
-          key={`${src}-${i}`}
+          key={src}
           src={src}
           alt={`${alt} — фото ${i + 1}`}
           fill
@@ -50,9 +49,9 @@ export function AutoImageSlider({ images, alt, intervalMs = 3000 }) {
         />
       ))}
 
-      {safeImages.length > 1 && (
+      {images.length > 1 && (
         <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-2 rounded-full bg-black/20 px-3 py-1.5">
-          {safeImages.map((_, i) => (
+          {images.map((_, i) => (
             <button
               key={i}
               type="button"
